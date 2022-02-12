@@ -2,7 +2,7 @@ package ru.job4j.concurrent;
 
 /**
  * @author Alex Gutorov
- * @version 1.0
+ * @version 1.1
  * @created 12/02/2022 - 23:13
  */
 public class Wget {
