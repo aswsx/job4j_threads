@@ -12,16 +12,23 @@ public class ThreadStop {
     private static final Logger LOG = LoggerFactory.getLogger(ThreadStop.class.getName());
 
     public static void main(String[] args) throws InterruptedException {
-        Thread thread = new Thread(
+        Thread progress = new Thread(
                 () -> {
-                    int count = 0;
                     while (!Thread.currentThread().isInterrupted()) {
-                        LOG.info(String.valueOf(count++));
+                        try {
+                            LOG.info("start ...");
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            LOG.info(String.valueOf(Thread.currentThread().isInterrupted()));
+                            LOG.info(String.valueOf(Thread.currentThread().getState()));
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
         );
-        thread.start();
+        progress.start();
         Thread.sleep(1000);
-        thread.interrupt();
+        progress.interrupt();
+        progress.join();
     }
-};
+}
