@@ -1,4 +1,4 @@
 job4j_threads.iml
 .idea
 .gitignore
-.target
+/target/
