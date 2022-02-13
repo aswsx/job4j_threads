@@ -1,4 +1,4 @@
-package ref;
+package ru.job4j.ref;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

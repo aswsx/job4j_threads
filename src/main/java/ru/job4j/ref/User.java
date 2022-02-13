@@ -1,4 +1,4 @@
-package ref;
+package ru.job4j.ref;
 
 /**
  * @author Alex Gutorov
