@@ -15,6 +15,7 @@ import java.net.URL;
  */
 public class FileDownload {
     private static final Logger LOG = LoggerFactory.getLogger(FileDownload.class);
+
     public static void main(String[] args) throws Exception {
         String file = "https://raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml";
         try (BufferedInputStream in = new BufferedInputStream(new URL(file).openStream());
@@ -25,8 +26,8 @@ public class FileDownload {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
                 Thread.sleep(1000);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            LOG.error("IOExceptoion", ioe);
         }
     }
 }
