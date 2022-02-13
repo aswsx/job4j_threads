@@ -32,4 +32,3 @@ public class ThreadState {
         LOG.info(String.valueOf(second.getState()));
     }
 }
-
