@@ -21,7 +21,7 @@ public class ContentSaver {
         this.file = file;
     }
 
-    public void saveContent(String content) {
+    public synchronized void saveContent(String content) {
         try (var output = new BufferedOutputStream(new FileOutputStream(file))) {
             for (var i = 0; i < content.length(); i += 1) {
                 output.write(content.charAt(i));

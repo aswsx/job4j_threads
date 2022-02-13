@@ -22,21 +22,19 @@ public final class ParseFile {
         this.file = file;
     }
 
-    public String getContent(IntPredicate predicate) {
-        var output = "";
+    public synchronized String getContent(IntPredicate predicate) {
         var builder = new StringBuilder();
         try (var input = new BufferedInputStream(new FileInputStream(file))) {
             int data;
-            while ((data = input.read()) > 0) {
+            while ((data = input.read()) != -1) {
                 if (predicate.test(data)) {
-                    builder.append((char)data);
+                    builder.append((char) data);
                 }
             }
         } catch (IOException ioe) {
             LOG.error("IOException", ioe);
         }
-        output = builder.toString();
-        return output;
+        return builder.toString();
     }
 
     public String getContentWithoutUnicode() {
