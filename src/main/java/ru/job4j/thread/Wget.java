@@ -23,10 +23,10 @@ public class Wget implements Runnable {
 
     private final String targetFile;
 
-    public Wget(String url, int speed, String outFile) {
+    public Wget(String url, int speed, String targetFile) {
         this.url = url;
         this.speed = speed;
-        this.targetFile = outFile;
+        this.targetFile = targetFile;
     }
 
     @Override
@@ -70,11 +70,11 @@ public class Wget implements Runnable {
         ValidateArgs.validate(args);
         var url = args[0];
         var speed = Integer.parseInt(args[1]) * 1048576;
-        var outFile = url.substring(url.lastIndexOf("/") + 1);
+        var targetFile = url.substring(url.lastIndexOf("/") + 1);
         LOG.info("Ссылка на файл {}", url);
         LOG.info("Скорость, б/с {}", speed);
-        LOG.info("Выходной файл {}", outFile);
-        var wget = new Thread(new Wget(url, speed, outFile));
+        LOG.info("Выходной файл {}", targetFile);
+        var wget = new Thread(new Wget(url, speed, targetFile));
         wget.start();
         wget.join();
     }
