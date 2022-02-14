@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -20,36 +21,60 @@ public class Wget implements Runnable {
     private final String url;
     private final int speed;
 
-    public Wget(String url, int speed) {
+    private final String targetFile;
+
+    public Wget(String url, int speed, String outFile) {
         this.url = url;
         this.speed = speed;
+        this.targetFile = outFile;
     }
 
     @Override
     public void run() {
         try (var in = new BufferedInputStream(new URL(url).openStream());
-             var fileOutputStream = new FileOutputStream("pom_tmp.xml")) {
-            var dataBuffer = new byte[1024];
+             var fileOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile))) {
+            var dataBuffer = new byte[speed];
             int bytesRead;
+            int bytesWrite = 0;
             var start = Instant.now();
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+            while ((bytesRead = in.read(dataBuffer, 0, speed)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
-                var end = Instant.now();
-                var diff = Duration.between(start, end).toMillis();
-                if (diff < speed) {
-                    Thread.sleep(speed - diff);
+                bytesWrite += bytesRead;
+                var diff = Duration.between(start, Instant.now()).toMillis();
+                if (bytesWrite >= speed && diff < 1000) {
+                    bytesWrite = 0;
+                    Thread.sleep(1000 - diff);
                 }
+                start = Instant.now();
             }
-        } catch (IOException | InterruptedException e) {
-            LOG.error("IO exception", e);
+        } catch (IOException | InterruptedException ie) {
+            LOG.error("Interrupted exception", ie);
             Thread.currentThread().interrupt();
         }
     }
 
+    private static class ValidateArgs {
+        private static void validate(String[] args) {
+            if (args.length != 2) {
+                throw new IllegalArgumentException("Аргументы введены некорректно"
+                +System.lineSeparator()
+                + "Введите ссылку на файл и необходимую скорость в Мб/с через пробел");
+            }
+            if (Integer.parseInt(args[1]) < 0) {
+                throw new IllegalArgumentException("Скорость, Мб/с, Введите положительное число");
+            }
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException {
+        ValidateArgs.validate(args);
         var url = args[0];
-        var speed = Integer.parseInt(args[1]);
-        var wget = new Thread(new Wget(url, speed));
+        var speed = Integer.parseInt(args[1]) * 1048576;
+        var outFile = url.substring(url.lastIndexOf("/") + 1);
+        LOG.info("Ссылка на файл {}", url);
+        LOG.info("Скорость, б/с {}", speed);
+        LOG.info("Выходной файл {}", outFile);
+        var wget = new Thread(new Wget(url, speed, outFile));
         wget.start();
         wget.join();
     }
