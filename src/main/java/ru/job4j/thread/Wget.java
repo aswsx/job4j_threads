@@ -59,8 +59,8 @@ public class Wget implements Runnable {
         private static void validate(String[] args) {
             if (args.length != 2) {
                 throw new IllegalArgumentException("Аргументы введены некорректно"
-                +System.lineSeparator()
-                + "Введите ссылку на файл и необходимую скорость в Мб/с через пробел");
+                        + System.lineSeparator()
+                        + "Введите ссылку на файл и необходимую скорость в Мб/с через пробел");
             }
             if (Integer.parseInt(args[1]) < 0) {
                 throw new IllegalArgumentException("Скорость, Мб/с, Введите положительное число");
