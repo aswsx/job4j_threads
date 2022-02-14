@@ -33,15 +33,15 @@ public class Wget implements Runnable {
     public void run() {
         try (var in = new BufferedInputStream(new URL(url).openStream());
              var fileOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile))) {
-            var dataBuffer = new byte[speed];
+            var dataBuffer = new byte[1024];
             int bytesRead;
-            int bytesWrite = 0;
+            var bytesWrite = 0;
             var start = Instant.now();
-            while ((bytesRead = in.read(dataBuffer, 0, speed)) != -1) {
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
                 bytesWrite += bytesRead;
-                var diff = Duration.between(start, Instant.now()).toMillis();
                 if (bytesWrite >= speed) {
+                    var diff = Duration.between(start, Instant.now()).toMillis();
                     bytesWrite = 0;
                     if (diff < 1000) {
                         Thread.sleep(1000 - diff);

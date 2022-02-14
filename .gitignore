@@ -2,3 +2,4 @@ job4j_threads.iml
 .idea
 .gitignore
 /target/
+/10Mb.dat
