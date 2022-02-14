@@ -47,9 +47,11 @@ public class Wget implements Runnable {
                 }
                 start = Instant.now();
             }
-        } catch (IOException | InterruptedException ie) {
+        } catch (InterruptedException ie) {
             LOG.error("Interrupted exception", ie);
             Thread.currentThread().interrupt();
+        } catch (IOException ioe) {
+            LOG.error("IO exception", ioe);
         }
     }
 
