@@ -42,9 +42,9 @@ public class Wget implements Runnable {
                 bytesWrite += bytesRead;
                 var diff = Duration.between(start, Instant.now()).toMillis();
                 if (bytesWrite >= speed && diff < 1000) {
-                    bytesWrite = 0;
                     Thread.sleep(1000 - diff);
                 }
+                bytesWrite = 0;
                 start = Instant.now();
             }
         } catch (InterruptedException ie) {
