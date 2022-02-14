@@ -41,10 +41,12 @@ public class Wget implements Runnable {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
                 bytesWrite += bytesRead;
                 var diff = Duration.between(start, Instant.now()).toMillis();
-                if (bytesWrite >= speed && diff < 1000) {
-                    Thread.sleep(1000 - diff);
+                if (bytesWrite >= speed) {
+                    bytesWrite = 0;
+                    if (diff < 1000) {
+                        Thread.sleep(1000 - diff);
+                    }
                 }
-                bytesWrite = 0;
                 start = Instant.now();
             }
         } catch (InterruptedException ie) {
