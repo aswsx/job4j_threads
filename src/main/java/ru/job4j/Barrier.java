@@ -1,16 +1,11 @@
 package ru.job4j;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Alex Gutorov
  * @version 1.0
  * @created 27/02/2022 - 12:32
  */
 public class Barrier {
-    private static final Logger LOG = LoggerFactory.getLogger(Barrier.class);
-
     private boolean flag = false;
 
     private final Object monitor = this;
