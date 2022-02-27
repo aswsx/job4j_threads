@@ -43,10 +43,6 @@ public class SimpleBlockingQueue<T> {
             LOG.info("Queue is empty, waiting until put");
             this.wait();
         }
-        if (queue.size() == limit) {
-            LOG.info("Queue is full, notify");
-            this.notifyAll();
-        }
         var rsl = queue.poll();
         LOG.info(String.format("Take OK %s ", rsl));
         this.notifyAll();
