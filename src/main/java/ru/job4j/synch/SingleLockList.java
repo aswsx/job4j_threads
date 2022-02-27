@@ -17,12 +17,10 @@ public class SingleLockList<T> implements Iterable<T> {
     @GuardedBy("this")
     private final List<T> list;
 
+    int[] array = {1};
+
     public SingleLockList(List<T> list) {
         this.list = (List<T>) copy(list);
-    }
-
-    public SingleLockList() {
-        this.list = new ArrayList<>();
     }
 
     public synchronized void add(T value) {
