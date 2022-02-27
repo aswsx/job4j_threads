@@ -11,7 +11,7 @@ import static org.hamcrest.core.Is.is;
 
 /**
  * @author Alex Gutorov
- * @version 1.0
+ * @version 1.1
  * @created 27/02/2022 - 14:25
  */
 public class SimpleBlockingQueueTest {
