@@ -1,6 +1,6 @@
 # job4j_threads
 
-[![Java CI with Maven](https://github.com/aswsx/job4j_threads/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/aswsx/job4j_design/actions/workflows/maven.yml)
+[![Java CI with Maven](https://github.com/aswsx/job4j_threads/actions/workflows/maven.yml/badge.svg)](https://github.com/aswsx/job4j_threads/actions/workflows/maven.yml)
 [![codecov](https://codecov.io/gh/aswsx/job4j_threads/branch/master/graph/badge.svg?token=rIPqeJScWw)](https://codecov.io/gh/aswsx/job4j_threads)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/aswsx/job4j_threads)
 
