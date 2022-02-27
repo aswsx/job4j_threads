@@ -2,7 +2,7 @@ package ru.job4j;
 
 /**
  * @author Alex Gutorov
- * @version 1.0
+ * @version 1.1
  * @created 27/02/2022 - 12:45
  */
 public class CountBarrier {
