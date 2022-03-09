@@ -14,15 +14,20 @@ public class CASCount {
 
     private final AtomicReference<Integer> count = new AtomicReference<>();
 
+    public CASCount(int i) {
+        this.count.set(i);
+    }
+
     public void increment() {
         int temp;
         do {
             temp = count.get();
-        } while (!count.compareAndSet(temp, temp++));
+        } while (!count.compareAndSet(temp, ++temp));
     }
 
     public int get() {
         return count.get();
     }
 }
+
 
