@@ -50,4 +50,13 @@ public class CacheTest {
         cache.update(base);
         assertThat(cache.get(1).getVersion(), is(2));
     }
+
+    @Test(expected = OptimisticException.class)
+    public void whenAddWrongVersionThenException() {
+        Base base1 = new Base(1, 1);
+        Base base2 = new Base(1, 2);
+        Cache cache = new Cache();
+        cache.add(base1);
+        cache.update(base2);
+    }
 }
