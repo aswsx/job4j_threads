@@ -14,23 +14,13 @@ public class ThreadPool {
     private final List<Thread> threads = new LinkedList<>();
     private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(10);
 
-    public void work(Runnable job) throws InterruptedException {
-        tasks.offer(job);
-    }
-
-    public void shutdown() {
-        for (var thread : threads) {
-            thread.interrupt();
-        }
-    }
-
     public ThreadPool() {
         int size = Runtime.getRuntime().availableProcessors();
         for (var i = 0; i < size; i++) {
             threads.add(new Thread(() -> {
-                while (Thread.currentThread().isInterrupted()) {
+                while (!Thread.currentThread().isInterrupted()) {
                     try {
-                        tasks.poll();
+                        tasks.poll().run();
                     } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                     }
@@ -39,6 +29,16 @@ public class ThreadPool {
         }
         for (var thread : threads) {
             thread.start();
+        }
+    }
+
+    public void work(Runnable job) throws InterruptedException {
+        tasks.offer(job);
+    }
+
+    public void shutdown() {
+        for (var thread : threads) {
+            thread.interrupt();
         }
     }
 
