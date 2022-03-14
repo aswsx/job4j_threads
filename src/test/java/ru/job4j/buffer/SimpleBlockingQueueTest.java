@@ -1,5 +1,6 @@
 package ru.job4j.buffer;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import static org.hamcrest.core.Is.is;
  * @created 27/02/2022 - 14:25
  */
 public class SimpleBlockingQueueTest {
-
+    @Ignore
     @Test
     public void whenQueueIsFullThenElementsQuantityEqualsSizeLimit() throws InterruptedException {
         SimpleBlockingQueue<Integer> sbq = new SimpleBlockingQueue<>(5);
