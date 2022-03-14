@@ -19,6 +19,8 @@
 Ammend Commit
 Fix4
 
+В курсе производилась работа с ветками git
+
 <h2>Содержимое проекта</h2>
 ###Многопоточность
 <ul>
@@ -30,4 +32,3 @@ Fix4
       <li><a href="https://github.com/aswsx/job4j_threads/tree/master/src/main/java/ru/job4j/thread/email">Executor Service, рассылка почты </a></li>
 </ul>
 
-Объединение зафиксированных изменений
