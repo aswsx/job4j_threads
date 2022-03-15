@@ -27,9 +27,12 @@ public class Req {
         String param = "";
         if ("POST".equals(httpRequestType)) {
             param = contents[7];
-        }
-        if ("GET".equals(httpRequestType) && "topic".equals(poohMode)) {
-            param = parameters[1].split("/")[3];
+        } else if ("GET".equals(httpRequestType)) {
+            if ("topic".equals(poohMode)) {
+                param = parameters[1].split("/")[3];
+            }
+        } else {
+            param = "";
         }
         return new Req(httpRequestType, poohMode, sourceName, param);
     }

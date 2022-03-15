@@ -27,5 +27,4 @@ public class QueueServiceTest {
         );
         assertThat(result.text(), is("temperature=18"));
     }
-
 }

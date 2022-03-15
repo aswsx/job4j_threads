@@ -22,9 +22,11 @@ public class PoohServ {
                      InputStream input = socket.getInputStream()) {
                     byte[] buff = new byte[1_000_000];
                     var total = input.read(buff);
-                    var text = new String(Arrays.copyOfRange(buff, 0, total), StandardCharsets.UTF_8);
+                    var text = new String(Arrays
+                            .copyOfRange(buff, 0, total), StandardCharsets.UTF_8);
                     System.out.println(text);
-                    out.write("HTTP/1.1 200 OK\r\n".getBytes());
+                    out.write("HTTP/1.1 200 OK".getBytes());
+                    out.write(System.getProperty("line.separator").getBytes(StandardCharsets.UTF_8));
                     out.write(text.getBytes());
                 }
             }

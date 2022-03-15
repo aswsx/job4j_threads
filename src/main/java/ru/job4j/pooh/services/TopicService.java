@@ -18,18 +18,20 @@ public class TopicService implements Service {
     @Override
     public Resp process(Req req) {
         Resp rsl = new Resp("", "204");
-        if ("POST".equals(req.httpRequestType())) {
-            topics.get(req.getSourceName()).values().forEach(v -> v.add(req.getParam()));
-        }
-        if ("GET".equals(req.httpRequestType())) {
-            topics.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
-            ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> map =
-                    topics.get(req.getSourceName());
-            map.putIfAbsent(req.getParam(), new ConcurrentLinkedQueue<>());
-            String s = map.get(req.getParam()).poll();
-            if (s != null) {
-                rsl = new Resp(s, "200");
+        String reqType = req.httpRequestType();
+        switch (reqType) {
+            case "POST" -> topics.get(req.getSourceName()).values().forEach(v -> v.add(req.getParam()));
+            case "GET" -> {
+                topics.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
+                ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> map =
+                        topics.get(req.getSourceName());
+                map.putIfAbsent(req.getParam(), new ConcurrentLinkedQueue<>());
+                String s = map.get(req.getParam()).poll();
+                if (s != null) {
+                    rsl = new Resp(s, "200");
+                }
             }
+            default -> new Resp("", "501");
         }
         return rsl;
     }
